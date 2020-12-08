@@ -1,12 +1,12 @@
 
 public class LendReturn {
 
-	lendBook(){
+	void lendBook(){
 
 
     }
 
-    returnBook(){
+    void returnBook(){
 
 
 

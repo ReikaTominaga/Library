@@ -1,8 +1,9 @@
 import java.util.Scanner;
 
 public class Page {
+UserList userlist = new UserList();
 
-	page1(){
+	void page1(){
 
         System.out.println("-----");
         System.out.println("メインメニュー");
@@ -17,7 +18,7 @@ public class Page {
         Scanner sc1 = new Scanner(System.in);
         String input = sc1.nextLine();
 
-        switch(input){
+        switch(Integer.parseInt(input)){
 
             case 1:
                 page1_1();
@@ -34,7 +35,7 @@ public class Page {
         }
     }
 
-    page1_1(){
+    void page1_1(){
 
         System.out.println("-----");
         System.out.println("利用者メニュー");
@@ -50,18 +51,37 @@ public class Page {
         Scanner sc1 = new Scanner(System.in);
         String input = sc1.nextLine();
 
-        switch(input){
+        switch(Integer.parseInt(input)){
 
             case 1:
+                userlist.getList();
                 //利用者リストを表示
                 page1_1();
                 break;
             case 2:
-                //利用者登録メソッドを呼び出し
+                System.out.println("登録する利用者名を入力してください");
+                Scanner sc2 = new Scanner(System.in);
+                String input2 = sc2.nextLine();
+
+                int addnum = userlist.addUser(input2);//利用者登録メソッドを呼び出し
+                System.out.println("利用者の登録が完了しました！");
+                System.out.println(input2 + "さんの登録番号は" + addnum + "です");
                 page1_1();
                 break;
             case 3:
-                //利用者削除メソッドを呼び出し
+                System.out.println("削除する利用者名を入力してください");
+                Scanner sc3 = new Scanner(System.in);
+                String input3 = sc3.nextLine();
+                System.out.println("登録番号を入力してください");
+                Scanner sc4 = new Scanner(System.in);
+                int input4 = sc4.nextInt();
+
+                int resultDel = userlist.delUser(input3,input4);//利用者削除メソッドを呼び出し
+
+                if (resultDel == 0)
+                    System.out.println("利用者の削除が完了しました！");
+                else
+                    System.out.println("利用者が見つかりませんでした。");
                 page1_1();
                 break;
             case 4:
@@ -73,7 +93,7 @@ public class Page {
         }
     }
 
-    page1_2(){
+    void page1_2(){
 
         System.out.println("-----");
         System.out.println("本棚メニュー");
@@ -89,18 +109,29 @@ public class Page {
         Scanner sc1 = new Scanner(System.in);
         String input = sc1.nextLine();
 
-        switch(input){
+        switch(Integer.parseInt(input)){
 
             case 1:
                 //本リスト、作者リストを表示
                 page1_2();
                 break;
             case 2:
+                System.out.println("登録する本のタイトルを入力してください");
+                Scanner sc2 = new Scanner(System.in);
+                String input2 = sc2.nextLine();
+                System.out.println("登録する本の著者を入力してください");
+                Scanner sc3 = new Scanner(System.in);
+                String input3 = sc3.nextLine();
                 //本登録メソッドを呼び出し
+                System.out.println("本の登録が完了しました！");
                 page1_2();
                 break;
             case 3:
+                System.out.println("削除する本のタイトルを入力してください");
+                Scanner sc4 = new Scanner(System.in);
+                String input4 = sc4.nextLine();
                 //本削除メソッドを呼び出し
+                System.out.println("本の削除が完了しました！");
                 page1_2();
                 break;
             case 4:
@@ -112,7 +143,7 @@ public class Page {
         }
     }
 
-    page1_3(){
+    void page1_3(){
 
         System.out.println("-----");
         System.out.println("貸出メニュー");
@@ -128,7 +159,7 @@ public class Page {
         Scanner sc1 = new Scanner(System.in);
         String input = sc1.nextLine();
 
-        switch(input){
+        switch(Integer.parseInt(input)){
 
             case 1:
                 //本リスト、作者リスト、ステータスリストを表示
@@ -151,7 +182,7 @@ public class Page {
         }
     }
 
-    page1_4(){
+    void page1_4(){
 
         System.out.println("ご利用ありがとうございました！");
     }

@@ -5,17 +5,17 @@ public class Bookshelf {
     private String[] authorList = new String[100];
     private String[] statusList = new String[100];
 
-    addBook() {
+    void addBook() {
 
 
     }
 
-    delBook() {
+    void delBook() {
 
 
     }
 
-    viewBooklist(){
+    void viewBooklist(){
 
 
     }
