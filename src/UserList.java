@@ -1,4 +1,6 @@
-public class UserList {
+import java.io.Serializable;
+
+public class  UserList implements Serializable {
 
 	private String[] userList = new String[100];
     //登録番号は添字の＋１+１００とする
@@ -30,7 +32,7 @@ public class UserList {
 
     int delUser(String name,int num){
         int index = num - 101;
-        if (userList[index] == name) {
+        if (userList[index].equals(name)) {
             userList[index] = null;
             return 0;
         }else {

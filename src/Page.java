@@ -1,9 +1,12 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 public class Page {
 UserList userlist = new UserList();
 
-	void page1(){
+	void movePage1(){
 
         System.out.println("-----");
         System.out.println("メインメニュー");
@@ -21,21 +24,21 @@ UserList userlist = new UserList();
         switch(Integer.parseInt(input)){
 
             case 1:
-                page1_1();
+                this.movePage1_1();
                 break;
             case 2:
-                page1_2();
+                this.movePage1_2();
                 break;
             case 3:
-                page1_3();
+                this.movePage1_3();
                 break;
             case 4:
-                page1_4();
+                this.movePage1_4();
                 break;
         }
     }
 
-    void page1_1(){
+    void movePage1_1(){
 
         System.out.println("-----");
         System.out.println("利用者メニュー");
@@ -56,7 +59,7 @@ UserList userlist = new UserList();
             case 1:
                 userlist.getList();
                 //利用者リストを表示
-                page1_1();
+                this.movePage1_1();
                 break;
             case 2:
                 System.out.println("登録する利用者名を入力してください");
@@ -66,7 +69,7 @@ UserList userlist = new UserList();
                 int addnum = userlist.addUser(input2);//利用者登録メソッドを呼び出し
                 System.out.println("利用者の登録が完了しました！");
                 System.out.println(input2 + "さんの登録番号は" + addnum + "です");
-                page1_1();
+                this.movePage1_1();
                 break;
             case 3:
                 System.out.println("削除する利用者名を入力してください");
@@ -82,18 +85,18 @@ UserList userlist = new UserList();
                     System.out.println("利用者の削除が完了しました！");
                 else
                     System.out.println("利用者が見つかりませんでした。");
-                page1_1();
+                this.movePage1_1();
                 break;
             case 4:
-                page1();
+                this.movePage1();
                 break;
             case 5:
-                page1_4();
+                this.movePage1_4();
                 break;
         }
     }
 
-    void page1_2(){
+    void movePage1_2(){
 
         System.out.println("-----");
         System.out.println("本棚メニュー");
@@ -113,7 +116,7 @@ UserList userlist = new UserList();
 
             case 1:
                 //本リスト、作者リストを表示
-                page1_2();
+                this.movePage1_2();
                 break;
             case 2:
                 System.out.println("登録する本のタイトルを入力してください");
@@ -124,7 +127,7 @@ UserList userlist = new UserList();
                 String input3 = sc3.nextLine();
                 //本登録メソッドを呼び出し
                 System.out.println("本の登録が完了しました！");
-                page1_2();
+                this.movePage1_2();
                 break;
             case 3:
                 System.out.println("削除する本のタイトルを入力してください");
@@ -132,18 +135,18 @@ UserList userlist = new UserList();
                 String input4 = sc4.nextLine();
                 //本削除メソッドを呼び出し
                 System.out.println("本の削除が完了しました！");
-                page1_2();
+                this.movePage1_2();
                 break;
             case 4:
-                page1();
+                this.movePage1();
                 break;
             case 5:
-                page1_4();
+                this.movePage1_4();
                 break;
         }
     }
 
-    void page1_3(){
+    void movePage1_3(){
 
         System.out.println("-----");
         System.out.println("貸出メニュー");
@@ -163,29 +166,36 @@ UserList userlist = new UserList();
 
             case 1:
                 //本リスト、作者リスト、ステータスリストを表示
-                page1_3();
+                this.movePage1_3();
                 break;
             case 2:
                 //本を借りるメソッドを呼び出し
-                page1_3();
+                this.movePage1_3();
                 break;
             case 3:
                 //本を返すメソッドを呼び出し
-                page1_3();
+                this.movePage1_3();
                 break;
             case 4:
-                page1();
+                this.movePage1();
                 break;
             case 5:
-                page1_4();
+                this.movePage1_4();
                 break;
         }
     }
 
-    void page1_4(){
+    void movePage1_4(){
 
-        System.out.println("ご利用ありがとうございました！");
+    	try {
+        FileOutputStream outFileUser = new FileOutputStream("UserList.dat");
+        ObjectOutputStream outObject = new ObjectOutputStream(outFileUser);
+        outObject.writeObject(userlist);
+        outObject.close();
+        outFileUser.close();
+    } catch(IOException e) {
     }
+     System.out.println("ご利用ありがとうございました！");
 
-
+    }
 }

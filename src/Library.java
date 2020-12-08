@@ -4,7 +4,7 @@ public class Library {
 
 		System.out.println("図書館へようこそ");
         Page page = new Page();
-        page.page1();
+        page.movePage1();
 
 	}
 
