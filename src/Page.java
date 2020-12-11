@@ -19,9 +19,9 @@ UserList userlist = new UserList();
         System.out.println("操作を選んでください[1,2,3,4]");
 
         Scanner sc1 = new Scanner(System.in);
-        String input = sc1.nextLine();
+        String operation = sc1.nextLine();
 
-        switch(Integer.parseInt(input)){
+        switch(Integer.parseInt(operation)){
 
             case 1:
                 this.movePage1_1();
@@ -52,9 +52,9 @@ UserList userlist = new UserList();
         System.out.println("操作を選んでください[1,2,3,4,5]");
 
         Scanner sc1 = new Scanner(System.in);
-        String input = sc1.nextLine();
+        String operation = sc1.nextLine();
 
-        switch(Integer.parseInt(input)){
+        switch(Integer.parseInt(operation)){
 
             case 1:
                 userlist.getList();
@@ -64,22 +64,22 @@ UserList userlist = new UserList();
             case 2:
                 System.out.println("登録する利用者名を入力してください");
                 Scanner sc2 = new Scanner(System.in);
-                String input2 = sc2.nextLine();
+                String userName = sc2.nextLine();
 
                 int addnum = userlist.addUser(input2);//利用者登録メソッドを呼び出し
                 System.out.println("利用者の登録が完了しました！");
-                System.out.println(input2 + "さんの登録番号は" + addnum + "です");
+                System.out.println(userName + "さんの登録番号は" + addnum + "です");
                 this.movePage1_1();
                 break;
             case 3:
                 System.out.println("削除する利用者名を入力してください");
                 Scanner sc3 = new Scanner(System.in);
-                String input3 = sc3.nextLine();
+                String deleteUserName = sc3.nextLine();
                 System.out.println("登録番号を入力してください");
                 Scanner sc4 = new Scanner(System.in);
-                int input4 = sc4.nextInt();
+                int deleteAddNum = sc4.nextInt();
 
-                int resultDel = userlist.delUser(input3,input4);//利用者削除メソッドを呼び出し
+                int resultDel = userlist.deleteUser(deleteUserName,deleteAddNum);//利用者削除メソッドを呼び出し
 
                 if (resultDel == 0)
                     System.out.println("利用者の削除が完了しました！");
@@ -110,9 +110,9 @@ UserList userlist = new UserList();
         System.out.println("操作を選んでください[1,2,3,4,5]");
 
         Scanner sc1 = new Scanner(System.in);
-        String input = sc1.nextLine();
+        String operation = sc1.nextLine();
 
-        switch(Integer.parseInt(input)){
+        switch(Integer.parseInt(operation)){
 
             case 1:
                 //本リスト、作者リストを表示
@@ -160,9 +160,9 @@ UserList userlist = new UserList();
         System.out.println("操作を選んでください[1,2,3,4,5]");
 
         Scanner sc1 = new Scanner(System.in);
-        String input = sc1.nextLine();
+        String operation = sc1.nextLine();
 
-        switch(Integer.parseInt(input)){
+        switch(Integer.parseInt(operation)){
 
             case 1:
                 //本リスト、作者リスト、ステータスリストを表示

@@ -3,7 +3,7 @@ import java.io.Serializable;
 public class  UserList implements Serializable {
 
 	private String[] userList = new String[100];
-    //登録番号は添字の＋１+１００とする
+    //登録番号は添字+101とする
 
     void getList() {
     	for (int i = 0 ; i < 100 ; i++) {
@@ -30,7 +30,7 @@ public class  UserList implements Serializable {
     return addnum;
     }
 
-    int delUser(String name,int num){
+    int deleteUser(String name,int num){
         int index = num - 101;
         if (userList[index].equals(name)) {
             userList[index] = null;
