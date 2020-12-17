@@ -4,12 +4,26 @@ public class User {//extends Human {
 	private int userNum;
     private String name;
 
-    void rentBook() {
+    public User(int userNum, String name) {
+        this.userNum = userNum;
+        this.name = name;
+    }
+
+    public int getUserNum() {
+    	return this.userNum;
+    }
+
+    public String getUserName() {
+    	return this.name;
+    }
+
+
+    public void rentBook() {
 
 
     }
 
-    void returnBook() {
+    public void returnBook() {
 
 
     }

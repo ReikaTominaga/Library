@@ -6,17 +6,17 @@ public class Bookshelf implements Serializable {
     private String[] authorList = new String[100];
     private String[] statusList = new String[100];
 
-    void addBook() {
+    public void addBook() {
 
 
     }
 
-    void delBook() {
+    public void delBook() {
 
 
     }
 
-    void viewBooklist(){
+    public void viewBooklist(){
 
 
     }

@@ -1,43 +1,42 @@
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class  UserList implements Serializable {
 
-	private String[] userList = new String[100];
-    //登録番号は添字+101とする
+	private ArrayList<User> userList = new ArrayList<User>();
+    //登録番号はリストのサイズ+101とする
 
-    void getList() {
-    	for (int i = 0 ; i < 100 ; i++) {
-            if (userList[0] == null ) {
-            	System.out.println("現在の利用者登録はありません");
-            	break;
-           }else if (userList[i] != null){
-            	System.out.println("登録番号：" + (i+101) + "  " + "利用者名：" + userList[i]);
-            }
+    public Map getUserList() {
 
-            }
-    	}
+        Map<Object,String> allUser = new HashMap<>();
 
-    int addUser(String name) {
-        int addnum = 0;
-        for(int i = 0 ; i < 100 ; i++){
-            if (userList[i] == null) {
-                userList[i] = name;
-                addnum = i+101;
-                break;
+        if (userList.size() == 0){
+            System.out.println("現在の利用者登録はありません");
+        }else{
+
+            for (int i = 0; i < userList.size(); i++){
+                allUser.put(userList.get(i).getUserNum(), userList.get(i).getUserName());
             }
         }
+        return allUser;
+    	}
+
+    public int addUser(String name) {
+        int addnum = 0;
+        int listSize = userList.size();
+
+        addnum = listSize + 101;
+        userList.add(new User(addnum,name));
 
     return addnum;
     }
 
-    int deleteUser(String name,int num){
-        int index = num - 101;
-        if (userList[index].equals(name)) {
-            userList[index] = null;
+    public int deleteUser(String name){
+
+            userList.remove(name);
             return 0;
-        }else {
-            return 1;
-        }
 
 
 

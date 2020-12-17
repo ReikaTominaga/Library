@@ -1,12 +1,15 @@
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Page {
 UserList userlist = new UserList();
+Scanner sc1 = new Scanner(System.in);
 
-	void movePage1(){
+	public void movePage1(){
 
         System.out.println("-----");
         System.out.println("メインメニュー");
@@ -18,7 +21,6 @@ UserList userlist = new UserList();
         System.out.println("");
         System.out.println("操作を選んでください[1,2,3,4]");
 
-        Scanner sc1 = new Scanner(System.in);
         String operation = sc1.nextLine();
 
         switch(Integer.parseInt(operation)){
@@ -38,7 +40,7 @@ UserList userlist = new UserList();
         }
     }
 
-    void movePage1_1(){
+    private void movePage1_1(){
 
         System.out.println("-----");
         System.out.println("利用者メニュー");
@@ -51,35 +53,34 @@ UserList userlist = new UserList();
         System.out.println("");
         System.out.println("操作を選んでください[1,2,3,4,5]");
 
-        Scanner sc1 = new Scanner(System.in);
         String operation = sc1.nextLine();
 
         switch(Integer.parseInt(operation)){
 
             case 1:
-                userlist.getList();
-                //利用者リストを表示
+                Map<Object,String> displayAllUsers = new HashMap<>();
+                displayAllUsers = userlist.getUserList();
+                for (Object key : displayAllUsers.keySet()){
+                    System.out.println("登録番号:" + key + " " + "利用者名：" + displayAllUsers.get(key));
+                }
                 this.movePage1_1();
                 break;
             case 2:
                 System.out.println("登録する利用者名を入力してください");
-                Scanner sc2 = new Scanner(System.in);
-                String userName = sc2.nextLine();
+                String userName = sc1.nextLine();
 
-                int addnum = userlist.addUser(input2);//利用者登録メソッドを呼び出し
+                int addnum = userlist.addUser(userName);//利用者登録メソッドを呼び出し
                 System.out.println("利用者の登録が完了しました！");
                 System.out.println(userName + "さんの登録番号は" + addnum + "です");
                 this.movePage1_1();
                 break;
             case 3:
                 System.out.println("削除する利用者名を入力してください");
-                Scanner sc3 = new Scanner(System.in);
-                String deleteUserName = sc3.nextLine();
-                System.out.println("登録番号を入力してください");
-                Scanner sc4 = new Scanner(System.in);
-                int deleteAddNum = sc4.nextInt();
+                String deleteUserName = sc1.nextLine();
+                //System.out.println("登録番号を入力してください");
+                //int deleteAddNum = sc1.nextInt();
 
-                int resultDel = userlist.deleteUser(deleteUserName,deleteAddNum);//利用者削除メソッドを呼び出し
+                int resultDel = userlist.deleteUser(deleteUserName);//利用者削除メソッドを呼び出し
 
                 if (resultDel == 0)
                     System.out.println("利用者の削除が完了しました！");
@@ -96,7 +97,7 @@ UserList userlist = new UserList();
         }
     }
 
-    void movePage1_2(){
+    private void movePage1_2(){
 
         System.out.println("-----");
         System.out.println("本棚メニュー");
@@ -109,7 +110,6 @@ UserList userlist = new UserList();
         System.out.println("");
         System.out.println("操作を選んでください[1,2,3,4,5]");
 
-        Scanner sc1 = new Scanner(System.in);
         String operation = sc1.nextLine();
 
         switch(Integer.parseInt(operation)){
@@ -120,21 +120,18 @@ UserList userlist = new UserList();
                 break;
             case 2:
                 System.out.println("登録する本のタイトルを入力してください");
-                Scanner sc2 = new Scanner(System.in);
-                String input2 = sc2.nextLine();
+                String addBookTitle = sc1.nextLine();
                 System.out.println("登録する本の著者を入力してください");
-                Scanner sc3 = new Scanner(System.in);
-                String input3 = sc3.nextLine();
+                String addBookAuthor = sc1.nextLine();
                 //本登録メソッドを呼び出し
                 System.out.println("本の登録が完了しました！");
                 this.movePage1_2();
                 break;
             case 3:
                 System.out.println("削除する本のタイトルを入力してください");
-                Scanner sc4 = new Scanner(System.in);
-                String input4 = sc4.nextLine();
+                String deleteBookTitle = sc1.nextLine();
                 //本削除メソッドを呼び出し
-                System.out.println("本の削除が完了しました！");
+                System.out.println( deleteBookTitle + "の削除が完了しました");
                 this.movePage1_2();
                 break;
             case 4:
@@ -146,7 +143,7 @@ UserList userlist = new UserList();
         }
     }
 
-    void movePage1_3(){
+    private void movePage1_3(){
 
         System.out.println("-----");
         System.out.println("貸出メニュー");
@@ -159,7 +156,6 @@ UserList userlist = new UserList();
         System.out.println("");
         System.out.println("操作を選んでください[1,2,3,4,5]");
 
-        Scanner sc1 = new Scanner(System.in);
         String operation = sc1.nextLine();
 
         switch(Integer.parseInt(operation)){
@@ -185,7 +181,7 @@ UserList userlist = new UserList();
         }
     }
 
-    void movePage1_4(){
+    private void movePage1_4(){
 
     	try {
         FileOutputStream outFileUser = new FileOutputStream("UserList.dat");
