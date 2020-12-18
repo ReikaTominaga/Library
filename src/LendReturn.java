@@ -1,12 +1,17 @@
 
 public class LendReturn {
 
-	void lendBook(){
+    public LendReturn(){
 
 
     }
 
-    void returnBook(){
+	public void lendBook(){
+
+
+    }
+
+    public void returnBook(){
 
 
 

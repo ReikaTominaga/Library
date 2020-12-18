@@ -7,6 +7,11 @@ public class Bookshelf implements Serializable {
 
 	private ArrayList<Book> bookList = new ArrayList<Book>();
 
+	public Bookshelf() {
+
+
+	}
+
 
     public void addBook(String title,String author) {
 

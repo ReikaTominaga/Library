@@ -10,6 +10,11 @@ UserList userlist = new UserList();
 Scanner sc1 = new Scanner(System.in);
 Bookshelf bookshelf = new Bookshelf();
 
+	public Page() {
+
+
+	}
+
 	public void movePage1(){
 
 
@@ -177,7 +182,7 @@ Bookshelf bookshelf = new Bookshelf();
         switch(Integer.parseInt(operation)){
 
             case 1:
-                //本リスト、作者リスト、ステータスリストを表示
+                //本リスト、ステータスリストを表示
                 this.movePage1_3();
                 break;
             case 2:

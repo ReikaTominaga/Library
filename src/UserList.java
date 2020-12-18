@@ -8,6 +8,11 @@ public class  UserList implements Serializable {
 	private ArrayList<User> userList = new ArrayList<User>();
     //登録番号はリストのサイズ+101とする
 
+	public UserList(){
+
+
+	}
+
     public Map getUserList() {
 
         Map<Object,String> allUser = new HashMap<>();
