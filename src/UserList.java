@@ -33,12 +33,9 @@ public class  UserList implements Serializable {
     return addnum;
     }
 
-    public int deleteUser(String name){
+    public void deleteUser(int indexDelete){
 
-            userList.remove(name);
-            return 0;
-
-
+    	userList.remove(indexDelete);
 
     }
 

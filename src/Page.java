@@ -8,8 +8,11 @@ import java.util.Scanner;
 public class Page {
 UserList userlist = new UserList();
 Scanner sc1 = new Scanner(System.in);
+Bookshelf bookshelf = new Bookshelf();
 
 	public void movePage1(){
+
+
 
         System.out.println("-----");
         System.out.println("メインメニュー");
@@ -77,15 +80,22 @@ Scanner sc1 = new Scanner(System.in);
             case 3:
                 System.out.println("削除する利用者名を入力してください");
                 String deleteUserName = sc1.nextLine();
-                //System.out.println("登録番号を入力してください");
-                //int deleteAddNum = sc1.nextInt();
+                System.out.println("登録番号を入力してください");
+                int deleteAddNum = sc1.nextInt();
 
-                int resultDel = userlist.deleteUser(deleteUserName);//利用者削除メソッドを呼び出し
+                Map<Object,String> deleteAllUsers = new HashMap<>();
+                deleteAllUsers = userlist.getUserList();
 
-                if (resultDel == 0)
-                    System.out.println("利用者の削除が完了しました！");
-                else
-                    System.out.println("利用者が見つかりませんでした。");
+                int deleteIndex = 0;
+
+                if (deleteUserName.equals(deleteAllUsers.get(deleteAddNum))) {
+                	deleteIndex = deleteAddNum - 101;
+                	userlist.deleteUser(deleteIndex);//利用者削除メソッドを呼び出し
+                	System.out.println("利用者の削除が完了しました");
+                }else{
+                	System.out.println("利用者が見つかりませんでした");
+                }
+
                 this.movePage1_1();
                 break;
             case 4:
@@ -115,7 +125,12 @@ Scanner sc1 = new Scanner(System.in);
         switch(Integer.parseInt(operation)){
 
             case 1:
-                //本リスト、作者リストを表示
+            	Map<String,String> displayAllBooks = new HashMap<>();
+            	displayAllBooks = bookshelf.getBookList();
+                for (String key : displayAllBooks.keySet()){
+                    System.out.println("タイトル:" + key + " " + "著者：" + displayAllBooks.get(key));
+                }
+
                 this.movePage1_2();
                 break;
             case 2:
@@ -123,7 +138,8 @@ Scanner sc1 = new Scanner(System.in);
                 String addBookTitle = sc1.nextLine();
                 System.out.println("登録する本の著者を入力してください");
                 String addBookAuthor = sc1.nextLine();
-                //本登録メソッドを呼び出し
+
+                bookshelf.addBook(addBookTitle,addBookAuthor);//本登録メソッドを呼び出し
                 System.out.println("本の登録が完了しました！");
                 this.movePage1_2();
                 break;
@@ -185,10 +201,16 @@ Scanner sc1 = new Scanner(System.in);
 
     	try {
         FileOutputStream outFileUser = new FileOutputStream("UserList.dat");
-        ObjectOutputStream outObject = new ObjectOutputStream(outFileUser);
-        outObject.writeObject(userlist);
-        outObject.close();
+        ObjectOutputStream outObjectUser = new ObjectOutputStream(outFileUser);
+        outObjectUser.writeObject(userlist);
+        outObjectUser.close();
         outFileUser.close();
+
+        FileOutputStream outFileBook = new FileOutputStream("BookList.dat");
+        ObjectOutputStream outObjectBook = new ObjectOutputStream(outFileBook);
+        outObjectBook.writeObject(bookshelf);
+        outObjectBook.close();
+        outFileBook.close();
     } catch(IOException e) {
     }
      System.out.println("ご利用ありがとうございました！");
