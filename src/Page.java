@@ -183,6 +183,17 @@ Bookshelf bookshelf = new Bookshelf();
 
             case 1:
                 //本リスト、ステータスリストを表示
+            	Map<String,String> displayBookStatus = new HashMap<>();
+            	displayBookStatus = bookshelf.getBookStatus();
+
+                for (String key : displayBookStatus.keySet()){
+                	if (displayBookStatus.get(key)=="0") {
+                		displayBookStatus.replace(key,"貸出可");
+                	}else if (displayBookStatus.get(key)=="1") {
+                		displayBookStatus.replace(key,"貸出中");
+                	}
+                    System.out.println("タイトル:" + key + " " + "貸出状況：" + displayBookStatus.get(key));
+                }
                 this.movePage1_3();
                 break;
             case 2:

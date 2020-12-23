@@ -10,7 +10,6 @@ public class  UserList implements Serializable {
 
 	public UserList(){
 
-
 	}
 
     public Map getUserList() {

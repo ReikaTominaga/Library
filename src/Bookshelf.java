@@ -39,5 +39,18 @@ public class Bookshelf implements Serializable {
         return allBooks;
     	}
 
+    public Map getBookStatus() {
 
- }
+        Map<String,String> bookStatus = new HashMap<>();
+
+        if (bookList.size() == 0){
+            System.out.println("現在貸出可能な本はありません");
+        }else{
+
+            for (int i = 0; i < bookList.size(); i++){
+            	bookStatus.put(bookList.get(i).getTitle(), bookList.get(i).getStatus());
+            }
+        }
+        return bookStatus;
+    	}
+}

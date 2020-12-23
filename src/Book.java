@@ -3,12 +3,12 @@ public class Book {
 
     private String title;
     private String author;
-    private int bookStatus;
+    private String bookStatus;
 
     public Book(String title, String author) {
         this.title = title;
         this.author = author;
-        this.bookStatus = 0;
+        this.bookStatus = "0";
     }
 
     public String getTitle() {
@@ -20,7 +20,7 @@ public class Book {
     }
 
 
-    public int getStatus() {
+    public String getStatus() {
     	return this.bookStatus;
     }
 
