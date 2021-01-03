@@ -9,6 +9,7 @@ public class Page {
 UserList userlist = new UserList();
 Scanner sc1 = new Scanner(System.in);
 Bookshelf bookshelf = new Bookshelf();
+RentReturn rentreturn = new RentReturn();
 
 	public Page() {
 
@@ -197,7 +198,24 @@ Bookshelf bookshelf = new Bookshelf();
                 this.movePage1_3();
                 break;
             case 2:
-                //本を借りるメソッドを呼び出し
+            	Map<String,String> rentBookList = new HashMap<>();
+            	rentBookList = bookshelf.getBookStatus();
+                System.out.println("借りたい本のタイトルを入力してください");
+                String rentTitle = sc1.nextLine();
+
+                if(rentBookList.containsKey(rentTitle)) {
+                	if(rentBookList.get(rentTitle)=="0") {
+                		//本を借りるメソッドを呼び出し
+                		rentreturn.rentBook(rentTitle);
+                		System.out.println(rentTitle + "の貸出しが完了しました。");
+                	}else {
+                		System.out.println("指定されたタイトルは現在貸出中です。");
+                	}
+
+                }else {
+                	System.out.println("指定されたタイトルが見つかりません。");
+                }
+
                 this.movePage1_3();
                 break;
             case 3:
@@ -215,7 +233,7 @@ Bookshelf bookshelf = new Bookshelf();
 
     private void movePage1_4(){
 
-    	try {
+    try {
         FileOutputStream outFileUser = new FileOutputStream("UserList.dat");
         ObjectOutputStream outObjectUser = new ObjectOutputStream(outFileUser);
         outObjectUser.writeObject(userlist);

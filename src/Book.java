@@ -24,5 +24,7 @@ public class Book {
     	return this.bookStatus;
     }
 
-
+    public void setStatus(String bookStatus) {
+    	this.bookStatus = bookStatus;
+    }
 }

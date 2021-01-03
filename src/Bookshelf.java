@@ -52,5 +52,19 @@ public class Bookshelf implements Serializable {
             }
         }
         return bookStatus;
+
+    }
+
+    public int getIndex(String bookTitle) {
+    	ArrayList<String> bookTitleList = new ArrayList<String>();
+    	for (int i = 0; i < bookList.size(); i++){
+    		bookTitleList.add(bookList.get(i).getTitle());
     	}
+    	return bookTitleList.indexOf(bookTitle);
+    }
+
+    public void setBookStatus(int bookIndex,String bookStatus) {
+    	System.out.println("indexは"+ bookIndex );
+    	bookList.get(bookIndex).setStatus(bookStatus);
+    }
 }
