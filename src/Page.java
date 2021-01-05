@@ -1,6 +1,3 @@
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -12,7 +9,8 @@ Bookshelf bookshelf = new Bookshelf();
 RentReturn rentreturn = new RentReturn();
 
 	public Page() {
-
+		//デシリアライズ処理を入れる？
+		//ファイルが存在しない場合は処理なし
 
 	}
 
@@ -101,7 +99,6 @@ RentReturn rentreturn = new RentReturn();
                 }else{
                 	System.out.println("利用者が見つかりませんでした");
                 }
-
                 this.movePage1_1();
                 break;
             case 4:
@@ -233,20 +230,9 @@ RentReturn rentreturn = new RentReturn();
 
     private void movePage1_4(){
 
-    try {
-        FileOutputStream outFileUser = new FileOutputStream("UserList.dat");
-        ObjectOutputStream outObjectUser = new ObjectOutputStream(outFileUser);
-        outObjectUser.writeObject(userlist);
-        outObjectUser.close();
-        outFileUser.close();
+    	userlist.outPutFile();
+    	bookshelf.outPutFile();
 
-        FileOutputStream outFileBook = new FileOutputStream("BookList.dat");
-        ObjectOutputStream outObjectBook = new ObjectOutputStream(outFileBook);
-        outObjectBook.writeObject(bookshelf);
-        outObjectBook.close();
-        outFileBook.close();
-    } catch(IOException e) {
-    }
      System.out.println("ご利用ありがとうございました！");
 
     }

@@ -1,3 +1,6 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,13 +61,25 @@ public class Bookshelf implements Serializable {
     public int getIndex(String bookTitle) {
     	ArrayList<String> bookTitleList = new ArrayList<String>();
     	for (int i = 0; i < bookList.size(); i++){
-    		bookTitleList.add(bookList.get(i).getTitle());
+    		bookTitleList.add(bookList.getTitle().get(i));//※値が格納されていない
     	}
     	return bookTitleList.indexOf(bookTitle);
     }
 
     public void setBookStatus(int bookIndex,String bookStatus) {
-    	System.out.println("indexは"+ bookIndex );
     	bookList.get(bookIndex).setStatus(bookStatus);
+    }
+
+    public void outPutFile() {
+        try {
+            FileOutputStream outFileBook = new FileOutputStream("BookList.dat");
+            ObjectOutputStream outObjectBook = new ObjectOutputStream(outFileBook);
+            outObjectBook.writeObject(bookList);
+            outObjectBook.close();
+            outFileBook.close();
+        } catch(IOException e) {
+        }
+
+
     }
 }

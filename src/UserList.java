@@ -1,3 +1,6 @@
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +14,7 @@ public class  UserList implements Serializable {
 	public UserList(){
 
 	}
+
 
     public Map getUserList() {
 
@@ -39,8 +43,21 @@ public class  UserList implements Serializable {
 
     public void deleteUser(int indexDelete){
 
-    	userList.remove(indexDelete);
+    	name deleteName = new name();
+    	deleteName = "未登録";
+    	userList.set(indexDelete,deleteName);
 
+    }
+
+    public void outPutFile() {
+        try {
+            FileOutputStream outFileUser = new FileOutputStream("UserList.dat");
+            ObjectOutputStream outObjectUser = new ObjectOutputStream(outFileUser);
+            outObjectUser.writeObject(userList);
+            outObjectUser.close();
+            outFileUser.close();
+        } catch(IOException e) {
+        }
     }
 
 }
