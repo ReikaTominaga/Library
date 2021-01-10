@@ -18,14 +18,14 @@ public class Bookshelf implements Serializable {
 
 	public void addBook(String title, String author) {
 
-		bookList.add(new Book(title, author));
+		this.bookList.add(new Book(title, author));
 
 	}
 
 	public void delBook(String deleteBookTitle) {
 
 		int deleteIndex = getIndex(deleteBookTitle);
-		bookList.remove(deleteIndex);
+		this.bookList.remove(deleteIndex);
 
 	}
 
@@ -33,12 +33,12 @@ public class Bookshelf implements Serializable {
 
 		Map<String, String> allBooks = new HashMap<>();
 
-		if (bookList.size() == 0) {
+		if (this.bookList.size() == 0) {
 			System.out.println("現在登録されている本はありません");
 		} else {
 
-			for (int i = 0; i < bookList.size(); i++) {
-				allBooks.put(bookList.get(i).getTitle(), bookList.get(i).getAuthor());
+			for (int i = 0; i < this.bookList.size(); i++) {
+				allBooks.put(this.bookList.get(i).getTitle(), this.bookList.get(i).getAuthor());
 			}
 		}
 		return allBooks;
@@ -48,12 +48,12 @@ public class Bookshelf implements Serializable {
 
 		Map<String, String> bookStatus = new HashMap<>();
 
-		if (bookList.size() == 0) {
+		if (this.bookList.size() == 0) {
 			System.out.println("現在貸出可能な本はありません");
 		} else {
 
-			for (int i = 0; i < bookList.size(); i++) {
-				bookStatus.put(bookList.get(i).getTitle(), bookList.get(i).getStatus());
+			for (int i = 0; i < this.bookList.size(); i++) {
+				bookStatus.put(this.bookList.get(i).getTitle(), this.bookList.get(i).getStatus());
 			}
 		}
 		return bookStatus;
@@ -62,14 +62,14 @@ public class Bookshelf implements Serializable {
 
 	public int getIndex(String bookTitle) {
 		ArrayList<String> bookTitleList = new ArrayList<String>();
-		for (int i = 0; i < bookList.size(); i++) {
-			bookTitleList.add(bookList.get(i).getTitle());
+		for (int i = 0; i < this.bookList.size(); i++) {//違うオブジェクトを参照しているから、リストが空
+			bookTitleList.add(this.bookList.get(i).getTitle());
 		}
 		return bookTitleList.indexOf(bookTitle);
 	}
 
 	public void setBookStatus(int bookIndex, String bookStatus) {
-		bookList.get(bookIndex).setStatus(bookStatus);
+		this.bookList.get(bookIndex).setStatus(bookStatus);
 	}
 
 	public void outPutFile() {
