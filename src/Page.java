@@ -1,239 +1,244 @@
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Page {
-UserList userlist = new UserList();
-Scanner sc1 = new Scanner(System.in);
-Bookshelf bookshelf = new Bookshelf();
-RentReturn rentreturn = new RentReturn();
+	UserList userlist = new UserList();
+	Scanner sc1 = new Scanner(System.in);
+	Bookshelf bookshelf = new Bookshelf();
+	RentReturn rentreturn = new RentReturn();
 
 	public Page() {
-		//デシリアライズ処理を入れる？
-		//ファイルが存在しない場合は処理なし
+		File Book = new File("C:pleiades/workspace/Library/BookList.dat");
+		File User = new File("C:pleiades/workspace/Library/UserList.dat");
+
+		if (Book.exists()) {
+			bookshelf.inPutFile();
+		}
+		if (User.exists()) {
+			userlist.inPutFile();
+		}
 
 	}
 
-	public void movePage1(){
+	public void movePage1() {
 
+		System.out.println("-----");
+		System.out.println("メインメニュー");
+		System.out.println("");
+		System.out.println("1.利用者名簿");
+		System.out.println("2.本棚");
+		System.out.println("3.貸出");
+		System.out.println("4.終了");
+		System.out.println("");
+		System.out.println("操作を選んでください[1,2,3,4]");
 
+		String operation = sc1.nextLine();
 
-        System.out.println("-----");
-        System.out.println("メインメニュー");
-        System.out.println("");
-        System.out.println("1.利用者名簿");
-        System.out.println("2.本棚");
-        System.out.println("3.貸出");
-        System.out.println("4.終了");
-        System.out.println("");
-        System.out.println("操作を選んでください[1,2,3,4]");
+		switch (Integer.parseInt(operation)) {
 
-        String operation = sc1.nextLine();
+		case 1:
+			this.movePage1_1();
+			break;
+		case 2:
+			this.movePage1_2();
+			break;
+		case 3:
+			this.movePage1_3();
+			break;
+		case 4:
+			this.movePage1_4();
+			break;
+		}
+	}
 
-        switch(Integer.parseInt(operation)){
+	private void movePage1_1() {
 
-            case 1:
-                this.movePage1_1();
-                break;
-            case 2:
-                this.movePage1_2();
-                break;
-            case 3:
-                this.movePage1_3();
-                break;
-            case 4:
-                this.movePage1_4();
-                break;
-        }
-    }
+		System.out.println("-----");
+		System.out.println("利用者メニュー");
+		System.out.println("");
+		System.out.println("1.利用者一覧");
+		System.out.println("2.利用者を登録する");
+		System.out.println("3.利用者を削除する");
+		System.out.println("4.もどる");
+		System.out.println("5.終了");
+		System.out.println("");
+		System.out.println("操作を選んでください[1,2,3,4,5]");
 
-    private void movePage1_1(){
+		String operation = sc1.nextLine();
+		System.out.println(operation);
+		switch (Integer.parseInt(operation)) {
 
-        System.out.println("-----");
-        System.out.println("利用者メニュー");
-        System.out.println("");
-        System.out.println("1.利用者一覧");
-        System.out.println("2.利用者を登録する");
-        System.out.println("3.利用者を削除する");
-        System.out.println("4.もどる");
-        System.out.println("5.終了");
-        System.out.println("");
-        System.out.println("操作を選んでください[1,2,3,4,5]");
+		case 1:
+			Map<Object, String> displayAllUsers = new HashMap<>();
+			displayAllUsers = userlist.getUserList();
+			for (Object key : displayAllUsers.keySet()) {
+				System.out.println("登録番号:" + key + " " + "利用者名：" + displayAllUsers.get(key));
+			}
+			this.movePage1_1();
+			break;
+		case 2:
+			System.out.println("登録する利用者名を入力してください");
+			String userName = sc1.nextLine();
 
-        String operation = sc1.nextLine();
+			int addnum = userlist.addUser(userName);//利用者登録メソッドを呼び出し
+			System.out.println("利用者の登録が完了しました！");
+			System.out.println(userName + "さんの登録番号は" + addnum + "です");
+			this.movePage1_1();
+			break;
+		case 3:
+			System.out.println("削除する利用者名を入力してください");
+			String deleteUserName = sc1.nextLine();
+			System.out.println("登録番号を入力してください");
+			int deleteAddNum = sc1.nextInt();
 
-        switch(Integer.parseInt(operation)){
+			Map<Object, String> deleteAllUsers = new HashMap<>();
+			deleteAllUsers = userlist.getUserList();
 
-            case 1:
-                Map<Object,String> displayAllUsers = new HashMap<>();
-                displayAllUsers = userlist.getUserList();
-                for (Object key : displayAllUsers.keySet()){
-                    System.out.println("登録番号:" + key + " " + "利用者名：" + displayAllUsers.get(key));
-                }
-                this.movePage1_1();
-                break;
-            case 2:
-                System.out.println("登録する利用者名を入力してください");
-                String userName = sc1.nextLine();
+			int deleteIndex = 0;
 
-                int addnum = userlist.addUser(userName);//利用者登録メソッドを呼び出し
-                System.out.println("利用者の登録が完了しました！");
-                System.out.println(userName + "さんの登録番号は" + addnum + "です");
-                this.movePage1_1();
-                break;
-            case 3:
-                System.out.println("削除する利用者名を入力してください");
-                String deleteUserName = sc1.nextLine();
-                System.out.println("登録番号を入力してください");
-                int deleteAddNum = sc1.nextInt();
+			if (deleteUserName.equals(deleteAllUsers.get(deleteAddNum))) {
+				deleteIndex = deleteAddNum - 101;
+				userlist.deleteUser(deleteIndex);//利用者削除メソッドを呼び出し
+				System.out.println("利用者の削除が完了しました");
+			} else {
+				System.out.println("利用者が見つかりませんでした");
+			}
+			this.movePage1_1();
+			break;
+		case 4:
+			this.movePage1();
+			break;
+		case 5:
+			this.movePage1_4();
+			break;
+		}
+	}
 
-                Map<Object,String> deleteAllUsers = new HashMap<>();
-                deleteAllUsers = userlist.getUserList();
+	private void movePage1_2() {
 
-                int deleteIndex = 0;
+		System.out.println("-----");
+		System.out.println("本棚メニュー");
+		System.out.println("");
+		System.out.println("1.本一覧");
+		System.out.println("2.本を登録する");
+		System.out.println("3.本を削除する");
+		System.out.println("4.もどる");
+		System.out.println("5.終了");
+		System.out.println("");
+		System.out.println("操作を選んでください[1,2,3,4,5]");
 
-                if (deleteUserName.equals(deleteAllUsers.get(deleteAddNum))) {
-                	deleteIndex = deleteAddNum - 101;
-                	userlist.deleteUser(deleteIndex);//利用者削除メソッドを呼び出し
-                	System.out.println("利用者の削除が完了しました");
-                }else{
-                	System.out.println("利用者が見つかりませんでした");
-                }
-                this.movePage1_1();
-                break;
-            case 4:
-                this.movePage1();
-                break;
-            case 5:
-                this.movePage1_4();
-                break;
-        }
-    }
+		String operation = sc1.nextLine();
 
-    private void movePage1_2(){
+		switch (Integer.parseInt(operation)) {
 
-        System.out.println("-----");
-        System.out.println("本棚メニュー");
-        System.out.println("");
-        System.out.println("1.本一覧");
-        System.out.println("2.本を登録する");
-        System.out.println("3.本を削除する");
-        System.out.println("4.もどる");
-        System.out.println("5.終了");
-        System.out.println("");
-        System.out.println("操作を選んでください[1,2,3,4,5]");
+		case 1:
+			Map<String, String> displayAllBooks = new HashMap<>();
+			displayAllBooks = bookshelf.getBookList();
+			for (String key : displayAllBooks.keySet()) {
+				System.out.println("タイトル:" + key + " " + "著者：" + displayAllBooks.get(key));
+			}
+			this.movePage1_2();
+			break;
+		case 2:
+			System.out.println("登録する本のタイトルを入力してください");
+			String addBookTitle = sc1.nextLine();
+			System.out.println("登録する本の著者を入力してください");
+			String addBookAuthor = sc1.nextLine();
+			bookshelf.addBook(addBookTitle, addBookAuthor);//本登録メソッドを呼び出し
+			System.out.println("本の登録が完了しました！");
+			this.movePage1_2();
+			break;
+		case 3:
+			System.out.println("削除する本のタイトルを入力してください");
+			String deleteBookTitle = sc1.nextLine();
+			//本削除メソッドを呼び出し
+			bookshelf.delBook(deleteBookTitle);
+			System.out.println(deleteBookTitle + "の削除が完了しました");
+			this.movePage1_2();
+			break;
+		case 4:
+			this.movePage1();
+			break;
+		case 5:
+			this.movePage1_4();
+			break;
+		}
+	}
 
-        String operation = sc1.nextLine();
+	private void movePage1_3() {
 
-        switch(Integer.parseInt(operation)){
+		System.out.println("-----");
+		System.out.println("貸出メニュー");
+		System.out.println("");
+		System.out.println("1.貸出状況");
+		System.out.println("2.本を借りる");
+		System.out.println("3.本を返却する");
+		System.out.println("4.もどる");
+		System.out.println("5.終了");
+		System.out.println("");
+		System.out.println("操作を選んでください[1,2,3,4,5]");
 
-            case 1:
-            	Map<String,String> displayAllBooks = new HashMap<>();
-            	displayAllBooks = bookshelf.getBookList();
-                for (String key : displayAllBooks.keySet()){
-                    System.out.println("タイトル:" + key + " " + "著者：" + displayAllBooks.get(key));
-                }
+		String operation = sc1.nextLine();
 
-                this.movePage1_2();
-                break;
-            case 2:
-                System.out.println("登録する本のタイトルを入力してください");
-                String addBookTitle = sc1.nextLine();
-                System.out.println("登録する本の著者を入力してください");
-                String addBookAuthor = sc1.nextLine();
+		switch (Integer.parseInt(operation)) {
 
-                bookshelf.addBook(addBookTitle,addBookAuthor);//本登録メソッドを呼び出し
-                System.out.println("本の登録が完了しました！");
-                this.movePage1_2();
-                break;
-            case 3:
-                System.out.println("削除する本のタイトルを入力してください");
-                String deleteBookTitle = sc1.nextLine();
-                //本削除メソッドを呼び出し
-                System.out.println( deleteBookTitle + "の削除が完了しました");
-                this.movePage1_2();
-                break;
-            case 4:
-                this.movePage1();
-                break;
-            case 5:
-                this.movePage1_4();
-                break;
-        }
-    }
+		case 1:
+			//本リスト、ステータスリストを表示
+			Map<String, String> displayBookStatus = new HashMap<>();
+			displayBookStatus = bookshelf.getBookStatus();
 
-    private void movePage1_3(){
+			for (String key : displayBookStatus.keySet()) {
+				if (displayBookStatus.get(key) == "0") {
+					displayBookStatus.replace(key, "貸出可");
+				} else if (displayBookStatus.get(key) == "1") {
+					displayBookStatus.replace(key, "貸出中");
+				}
+				System.out.println("タイトル:" + key + " " + "貸出状況：" + displayBookStatus.get(key));
+			}
+			this.movePage1_3();
+			break;
+		case 2:
+			Map<String, String> rentBookList = new HashMap<>();
+			rentBookList = bookshelf.getBookStatus();
+			System.out.println("借りたい本のタイトルを入力してください");
+			String rentTitle = sc1.nextLine();
 
-        System.out.println("-----");
-        System.out.println("貸出メニュー");
-        System.out.println("");
-        System.out.println("1.貸出状況");
-        System.out.println("2.本を借りる");
-        System.out.println("3.本を返却する");
-        System.out.println("4.もどる");
-        System.out.println("5.終了");
-        System.out.println("");
-        System.out.println("操作を選んでください[1,2,3,4,5]");
+			if (rentBookList.containsKey(rentTitle)) {
+				if (rentBookList.get(rentTitle) == "0") {
+					//本を借りるメソッドを呼び出し
+					rentreturn.rentBook(rentTitle);
+					System.out.println(rentTitle + "の貸出しが完了しました。");
+				} else {
+					System.out.println("指定されたタイトルは現在貸出中です。");
+				}
 
-        String operation = sc1.nextLine();
+			} else {
+				System.out.println("指定されたタイトルが見つかりません。");
+			}
 
-        switch(Integer.parseInt(operation)){
+			this.movePage1_3();
+			break;
+		case 3:
+			//本を返すメソッドを呼び出し
+			this.movePage1_3();
+			break;
+		case 4:
+			this.movePage1();
+			break;
+		case 5:
+			this.movePage1_4();
+			break;
+		}
+	}
 
-            case 1:
-                //本リスト、ステータスリストを表示
-            	Map<String,String> displayBookStatus = new HashMap<>();
-            	displayBookStatus = bookshelf.getBookStatus();
+	private void movePage1_4() {
 
-                for (String key : displayBookStatus.keySet()){
-                	if (displayBookStatus.get(key)=="0") {
-                		displayBookStatus.replace(key,"貸出可");
-                	}else if (displayBookStatus.get(key)=="1") {
-                		displayBookStatus.replace(key,"貸出中");
-                	}
-                    System.out.println("タイトル:" + key + " " + "貸出状況：" + displayBookStatus.get(key));
-                }
-                this.movePage1_3();
-                break;
-            case 2:
-            	Map<String,String> rentBookList = new HashMap<>();
-            	rentBookList = bookshelf.getBookStatus();
-                System.out.println("借りたい本のタイトルを入力してください");
-                String rentTitle = sc1.nextLine();
+		userlist.outPutFile();
+		bookshelf.outPutFile();
 
-                if(rentBookList.containsKey(rentTitle)) {
-                	if(rentBookList.get(rentTitle)=="0") {
-                		//本を借りるメソッドを呼び出し
-                		rentreturn.rentBook(rentTitle);
-                		System.out.println(rentTitle + "の貸出しが完了しました。");
-                	}else {
-                		System.out.println("指定されたタイトルは現在貸出中です。");
-                	}
+		System.out.println("ご利用ありがとうございました！");
 
-                }else {
-                	System.out.println("指定されたタイトルが見つかりません。");
-                }
-
-                this.movePage1_3();
-                break;
-            case 3:
-                //本を返すメソッドを呼び出し
-                this.movePage1_3();
-                break;
-            case 4:
-                this.movePage1();
-                break;
-            case 5:
-                this.movePage1_4();
-                break;
-        }
-    }
-
-    private void movePage1_4(){
-
-    	userlist.outPutFile();
-    	bookshelf.outPutFile();
-
-     System.out.println("ご利用ありがとうございました！");
-
-    }
+	}
 }
