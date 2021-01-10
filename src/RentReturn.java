@@ -9,7 +9,8 @@ public class RentReturn {
 
     }
 
-	public void rentBook(String bookTitle){
+	public void rentBook(Bookshelf shelf,String bookTitle){
+		this.bookshelf = shelf;
 		int rentBookIndex;
 		rentBookIndex = bookshelf.getIndex(bookTitle);
 

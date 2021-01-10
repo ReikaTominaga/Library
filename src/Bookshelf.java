@@ -62,7 +62,7 @@ public class Bookshelf implements Serializable {
 
 	public int getIndex(String bookTitle) {
 		ArrayList<String> bookTitleList = new ArrayList<String>();
-		for (int i = 0; i < this.bookList.size(); i++) {//違うオブジェクトを参照しているから、リストが空
+		for (int i = 0; i < this.bookList.size(); i++) {
 			bookTitleList.add(this.bookList.get(i).getTitle());
 		}
 		return bookTitleList.indexOf(bookTitle);

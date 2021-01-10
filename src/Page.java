@@ -208,7 +208,7 @@ public class Page {
 			if (rentBookList.containsKey(rentTitle)) {
 				if (rentBookList.get(rentTitle) == "0") {
 					//本を借りるメソッドを呼び出し
-					rentreturn.rentBook(rentTitle);
+					rentreturn.rentBook(bookshelf,rentTitle);
 					System.out.println(rentTitle + "の貸出しが完了しました。");
 				} else {
 					System.out.println("指定されたタイトルは現在貸出中です。");
