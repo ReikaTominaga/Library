@@ -1,22 +1,17 @@
+import Book.Book;
+import User.User;
 
 public class RentManager {
-
-
-	Bookshelf bookshelf = new Bookshelf();
-	User user = new User();
 
     public RentManager(){
 
 
     }
 
-	public void rentBook(Bookshelf shelf,String bookTitle,int userNum){
-		this.bookshelf = shelf;
-		int rentBookIndex;
-		rentBookIndex = bookshelf.getIndex(bookTitle);
+	public void update(User user ,Book book){
 
-//		bookshelf.setBookStatus(rentBookIndex,"1");
-		//User呼び出す
+		user.getBookList().add( book );
+		book.rent();
 
     }
 

@@ -3,6 +3,11 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import Book.Book;
+import Book.Bookshelf;
+import User.User;
+import User.UserList;
+
 public class Page {
 	UserList userlist = new UserList();
 	Scanner sc1 = new Scanner(System.in);
@@ -18,10 +23,11 @@ public class Page {
 		if (Book.exists()) {
 			bookshelf.load();
 		}
+/*
 		if (User.exists()) {
 			userlist.load();
 		}
-
+*/
 	}
 
 	public void movePage1() {
@@ -77,35 +83,35 @@ public class Page {
 
 			for(Iterator<User> iterator = list.iterator(); iterator.hasNext(); ) {
 				User user = iterator.next();
-				System.out.println("登録番号:" + user.getId() + " " + "利用者名：" + user.getName());
+				System.out.println("会員ID:" + user.getId() + " " + "利用者名：" + user.getName());
 			}
 
 			this.movePage1_1();//[後で変更したい]同じページの呼び出しはループで処理する
 			break;
 		case 2:
 			System.out.println("登録する利用者名を入力してください");
-			String username = sc1.nextLine();
+			String addname = sc1.nextLine();
 
 			int userId = this.userlist.getCumulativeUsers() + this.userlist.getOffsetOfUserId();
-			User user = new User( userId, username );
+			User user = new User( userId, addname );
 
 			//利用者登録メソッドを呼び出し
 			int addnum = userlist.addUser( user );
 			System.out.println("利用者の登録が完了しました！");
-			System.out.println(user.getName() + "さんの登録番号は" + addnum + "です");
+			System.out.println(user.getName() + "さんの会員IDは" + addnum + "です");
 			this.movePage1_1();
 			break;
 		case 3:
 			System.out.println("削除する利用者名を入力してください");
-			String username2 = sc1.nextLine();
-			System.out.println("登録番号を入力してください");
+			String delname = sc1.nextLine();
+			System.out.println("会員IDを入力してください");
 			int userId2 = Integer.parseInt( sc1.nextLine() );
 
 			ArrayList<User> deleteAllUsers = userlist.getUserList();
 
 			int deleteIndex = 0;
 
-			if (username2.equals(deleteAllUsers.get(userId2 - userlist.getOffsetOfUserId()).getName())) {
+			if (delname.equals(deleteAllUsers.get(userId2 - userlist.getOffsetOfUserId()).getName())) {
 				deleteIndex = userId2 - userlist.getOffsetOfUserId();
 
 				//利用者削除メソッドを呼び出し
@@ -118,10 +124,10 @@ public class Page {
 			break;
 		case 4:
 			//借りてる本の状況
-			System.out.println("利用状況を確認したい方の、登録番号を入力してください");
-			int userNum = Integer.parseInt( sc1.nextLine() );
+			System.out.println("利用状況を確認したい方の、会員IDを入力してください");
+			int userId3 = Integer.parseInt( sc1.nextLine() );
 
-			User user2 = userlist.getUserList().get( userNum - userlist.getOffsetOfUserId() );
+			User user2 = userlist.getUserList().get( userId3 - userlist.getOffsetOfUserId() );
 
 			System.out.println("借りている本の一覧：");
 			ArrayList<Book> books = user2.getBookList();
@@ -236,42 +242,40 @@ public class Page {
 			this.movePage1_3();
 			break;
 		case 2:
-			System.out.println("借りる方の登録番号を入力してください");
-			int userNum = Integer.parseInt( sc1.nextLine() );
+			System.out.println("会員IDを入力してください");
+			int userId = Integer.parseInt( sc1.nextLine() );
 			System.out.println("借りたい本のタイトルを入力してください");
 			String rentTitle = sc1.nextLine();
 
-			User user = this.userlist.getUser( userNum );
+			User user = this.userlist.getUser( userId );
 			Book book = this.bookshelf.getBookByTitle( rentTitle );
 
-			// TODO: userlistの中の該当ユーザの、借りている本に Book を追加する。
-			user.getBookList().add( book ); // 参照渡しならこれでおｋ
-
-			// TODO: bookshelfの中の該当する本で、「貸出」をする（ rent() メソッド）
-			book.rent(); // 参照わたしだったらこれでおｋ
-
-			/*
-			Map<String, String> rentBookList = new HashMap<>();
-			rentBookList = bookshelf.getBookStatus();
-
-			if (rentBookList.containsKey(rentTitle)) {
-				if (rentBookList.get(rentTitle) == "0") {
-					//本を借りるメソッドを呼び出し
-					rentManag.rentBook(bookshelf,rentTitle,userNum);
-					System.out.println(rentTitle + "の貸出しが完了しました。");
-				} else {
-					System.out.println("指定されたタイトルは現在貸出中です。");
-				}
-
-			} else {
-				System.out.println("指定されたタイトルが見つかりません。");
-			}
-			*/
+			rentManag.update( user , book );
 
 			this.movePage1_3();
 			break;
+
 		case 3:
-			//本を返すメソッドを呼び出し
+
+			System.out.println("会員IDを入力してください");
+			int userId2 = Integer.parseInt( sc1.nextLine() );
+
+			User referenceUser = this.userlist.getUser( userId2 );
+			System.out.println(referenceUser.getName() + "さんが借りている本");
+			ArrayList<Book> rentList = referenceUser.getBookList();
+
+			for(int i = 0 ; i < rentList.size() ; i++) {
+
+				System.out.println((i+1) + "：" + rentList.get(i).getTitle());
+			}
+
+			System.out.println("返却する本の番号を入力してください");
+			int backNum = Integer.parseInt( sc1.nextLine() ) -1;
+
+			Book backBook = rentList.get(backNum);
+
+			returnManag.update(referenceUser, backBook);
+
 			this.movePage1_3();
 			break;
 		case 4:

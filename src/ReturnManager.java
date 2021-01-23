@@ -1,19 +1,17 @@
+import Book.Book;
+import User.User;
 
 public class ReturnManager {
 
-
-	Bookshelf bookshelf = new Bookshelf();
-	User user = new User();
-
-    public ReturnManager(){
+	public ReturnManager(){
 
 
-    }
+	}
 
+	public void update(User user ,Book book ){
 
-    public void returnBook(){
-
-
+		user.getBookList().remove( book );
+		book.back();
 
     }
 

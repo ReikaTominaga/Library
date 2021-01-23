@@ -1,7 +1,6 @@
-import java.io.FileInputStream;
+package User;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,7 +57,7 @@ public class UserList implements Serializable {
 		} catch (IOException e) {
 		}
 	}
-
+/*
 	public void load() {//うまくいってない
 		try {
 			FileInputStream inFile = new FileInputStream("UserList.dat");
@@ -69,9 +68,8 @@ public class UserList implements Serializable {
 		} catch (IOException e) {
 		} catch (ClassNotFoundException e) {
 		}
-
 	}
-
+*/
 	public ArrayList<User> getUserList() {
 		return userList;
 	}
