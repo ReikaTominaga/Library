@@ -5,49 +5,50 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class UserList implements Serializable {
 
 	private ArrayList<User> userList = new ArrayList<User>();
-	private int addnumCount = 100;
+	private int cumulativeUsers = 0;
+	private final int offsetOfUserId = 100;
 
 	public UserList() {
 
 	}
 
-	public Map getUserList() {
+	/*
+	 * ユーザを追加します。
+	 */
+	public int addUser( User user) {
+		this.userList.add( user);
+		this.incCumulativeUsers();
 
-		Map<Object, String> allUser = new HashMap<>();
-
-		if (this.userList.size() == 0) {
-			System.out.println("現在の利用者登録はありません");
-		} else {
-
-			for (int i = 0; i < this.userList.size(); i++) {
-				allUser.put(this.userList.get(i).getUserNum(), this.userList.get(i).getUserName());
-			}
-		}
-		return allUser;
+		return user.getId();
 	}
 
-	public int addUser(String name) {
-		this.addnumCount += 1;
-		int listSize = this.userList.size();
+	public void incCumulativeUsers() {
 
-		this.userList.add(new User(this.addnumCount, name));
-
-		return this.addnumCount;
+		this.cumulativeUsers++;
 	}
 
-	public void deleteUser(int indexDelete) {
 
-		this.userList.remove(indexDelete);
+	public void deleteUser( User user ) {
 
+		this.userList.remove( user.getId() - this.offsetOfUserId );
 	}
 
-	public void outPutFile() {
+	/**
+	 * ユーザIDから該当するユーザオブジェクトを返却します。
+	 *
+	 * @param id 取得したいユーザID
+	 * @return ユーザ
+	 */
+	public User getUser( int id ) {
+
+		return this.userList.get( id - this.offsetOfUserId );
+	}
+
+	public void save() {
 		try {
 			FileOutputStream outFileUser = new FileOutputStream("UserList.dat");
 			ObjectOutputStream outObjectUser = new ObjectOutputStream(outFileUser);
@@ -58,7 +59,7 @@ public class UserList implements Serializable {
 		}
 	}
 
-	public void inPutFile() {
+	public void load() {//うまくいってない
 		try {
 			FileInputStream inFile = new FileInputStream("UserList.dat");
 			ObjectInputStream inObject = new ObjectInputStream(inFile);
@@ -70,5 +71,27 @@ public class UserList implements Serializable {
 		}
 
 	}
+
+	public ArrayList<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(ArrayList<User> userList) {
+		this.userList = userList;
+	}
+
+	public int getCumulativeUsers() {
+		return cumulativeUsers;
+	}
+
+	public void setCumulativeUsers(int cumulativeUsers) {
+		this.cumulativeUsers = cumulativeUsers;
+	}
+
+	public int getOffsetOfUserId() {
+		return offsetOfUserId;
+	}
+
+
 
 }
